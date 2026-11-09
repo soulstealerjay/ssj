@@ -309,3 +309,89 @@ footer p::before { content: "// "; color: var(--red-dark); }
     transition: none !important;
   }
 }
+/* ==========================================================
+   EASTER EGG STYLES
+   ========================================================== */
+
+/* Toast message */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  z-index: 10000;
+  max-width: 90vw;
+  padding: 0.7rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #fff;
+  background: #000;
+  border: 1px solid var(--red);
+  box-shadow: 0 0 18px rgba(255, 26, 26, 0.5);
+  transform: translate(-50%, 150%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* TV static burst */
+#static {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background:
+    repeating-conic-gradient(#fff 0% 25%, #000 0% 50%) 0 0 / 6px 6px;
+  opacity: 0.55;
+  animation: static-shake 0.15s steps(2) infinite;
+}
+
+@keyframes static-shake {
+  0%   { background-position: 0 0; }
+  25%  { background-position: 3px -2px; }
+  50%  { background-position: -4px 3px; }
+  75%  { background-position: 2px 4px; }
+  100% { background-position: -3px -3px; }
+}
+
+/* White mode */
+html.inverted {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* The secret © key */
+#key {
+  cursor: default;
+  user-select: none;
+}
+
+/* Secret page and 404 */
+.terminal {
+  font-family: var(--font-mono);
+  text-align: left;
+}
+
+.terminal p {
+  margin: 0.4rem 0;
+  opacity: 0;
+  animation: type-in 0.4s ease forwards;
+}
+
+.terminal p:nth-child(1) { animation-delay: 0.3s; }
+.terminal p:nth-child(2) { animation-delay: 1.2s; }
+.terminal p:nth-child(3) { animation-delay: 2.1s; }
+.terminal p:nth-child(4) { animation-delay: 3.0s; }
+.terminal p:nth-child(5) { animation-delay: 3.9s; }
+.terminal p:nth-child(6) { animation-delay: 4.8s; }
+
+.terminal .ok  { color: #3dff7a; }
+.terminal .bad { color: var(--red); }
+
+@keyframes type-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
