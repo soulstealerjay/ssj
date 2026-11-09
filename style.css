@@ -1,40 +1,311 @@
+/* ==========================================================
+   JAY'S BACKEND: AN EXTENSIVELY UNNECESSARY STYLESHEET
+   ========================================================== */
+
+/* ---------- Variables ---------- */
+:root {
+  --bg: #050505;
+  --fg: #f2f2f2;
+  --dim: #8a8a8a;
+  --red: #ff1a1a;
+  --red-dark: #b30000;
+  --cyan: #00e5ff;
+  --magenta: #ff00e6;
+  --font-main: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
+}
+
+/* ---------- Reset-ish ---------- */
 * { box-sizing: border-box; }
 
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+/* ---------- Body ---------- */
 body {
   margin: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.6;
-  color: #eee;
-  background: #111;
+  font-family: var(--font-main);
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  background:
+    radial-gradient(ellipse at center, #1a1a1a 0%, var(--bg) 70%),
+    var(--bg);
+  background-attachment: fixed;
+  cursor: crosshair;
+  overflow-x: hidden;
+  animation: crt-flicker 6s infinite;
 }
 
+/* ---------- CRT scanlines ---------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03) 0px,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Blinking REC light ---------- */
+body::after {
+  content: "● REC";
+  position: fixed;
+  top: 12px;
+  left: 16px;
+  z-index: 9999;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--red);
+  pointer-events: none;
+  animation: blink 1.2s steps(1) infinite;
+}
+
+/* ---------- Layout ---------- */
 main, footer {
   width: 100%;
-  max-width: 700px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
 }
 
 main { flex: 1; }
 
 .center { text-align: center; }
-main.center { display: flex; flex-direction: column; justify-content: center; }
 
-a { color: #ff4d4d; }
-
-.button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #ff0000;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
+main.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.button:hover { background: #cc0000; }
+/* ---------- Headings ---------- */
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2.2rem, 8vw, 4.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--fg);
+  text-shadow:
+    2px 0 var(--cyan),
+    -2px 0 var(--magenta);
+  animation: glitch 3s infinite;
+}
 
-footer { font-size: 0.9rem; color: #888; }
+h2 {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-weight: normal;
+  color: var(--red);
+  animation: neon-pulse 2.5s ease-in-out infinite;
+}
+
+h2::before { content: "> "; }
+h2::after {
+  content: "_";
+  animation: blink 1s steps(1) infinite;
+}
+
+h3 {
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--red);
+  border-bottom: 1px dashed var(--red-dark);
+  padding-bottom: 0.25rem;
+}
+
+/* ---------- Text ---------- */
+p { margin: 0.75rem 0; }
+
+em { color: var(--dim); }
+
+strong { color: #fff; }
+
+::selection {
+  background: var(--red);
+  color: #000;
+}
+
+/* ---------- Links ---------- */
+a {
+  color: var(--cyan);
+  text-decoration: none;
+  background-image: linear-gradient(var(--cyan), var(--cyan));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+a:hover,
+a:focus-visible {
+  background-size: 100% 1px;
+  color: #fff;
+}
+
+a:focus-visible {
+  outline: 2px dashed var(--red);
+  outline-offset: 4px;
+}
+
+/* ---------- The Button ---------- */
+.button {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.9rem 1.8rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: var(--red);
+  background-image: none;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  box-shadow:
+    4px 4px 0 var(--red-dark),
+    0 0 20px rgba(255, 26, 26, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* shine sweep */
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+.button:hover {
+  color: #fff;
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow:
+    6px 6px 0 var(--red-dark),
+    0 0 35px rgba(255, 26, 26, 0.8);
+  animation: wobble 0.4s ease-in-out;
+}
+
+.button:hover::before {
+  animation: shine 0.7s ease-in-out;
+}
+
+.button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--red-dark);
+}
+
+/* ---------- Footer ---------- */
+footer {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--dim);
+  border-top: 1px solid #222;
+}
+
+footer p::before { content: "// "; color: var(--red-dark); }
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--red-dark);
+  border: 2px solid var(--bg);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+/* ---------- Animations ---------- */
+@keyframes blink {
+  0%, 49%  { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  92%      { opacity: 1; }
+  93%      { opacity: 0.92; }
+  94%      { opacity: 1; }
+  97%      { opacity: 0.95; }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { text-shadow: 0 0 4px var(--red), 0 0 10px var(--red-dark); }
+  50%      { text-shadow: 0 0 8px var(--red), 0 0 22px var(--red); }
+}
+
+@keyframes glitch {
+  0%, 90%, 100% {
+    transform: translate(0);
+    text-shadow: 2px 0 var(--cyan), -2px 0 var(--magenta);
+  }
+  92% {
+    transform: translate(-3px, 1px) skewX(4deg);
+    text-shadow: 5px 0 var(--cyan), -5px 0 var(--magenta);
+  }
+  94% {
+    transform: translate(3px, -1px) skewX(-4deg);
+    text-shadow: -5px 0 var(--cyan), 5px 0 var(--magenta);
+  }
+  96% {
+    transform: translate(-1px, 2px);
+    text-shadow: 3px 2px var(--cyan), -3px -2px var(--magenta);
+  }
+}
+
+@keyframes shine {
+  from { left: -75%; }
+  to   { left: 150%; }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: translate(-2px, -2px) rotate(-1deg); }
+  25%      { transform: translate(-2px, -2px) rotate(1.5deg); }
+  50%      { transform: translate(-2px, -2px) rotate(-1.5deg); }
+  75%      { transform: translate(-2px, -2px) rotate(1deg); }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 480px) {
+  body::after { font-size: 0.65rem; top: 8px; left: 10px; }
+  .button { padding: 0.8rem 1.2rem; font-size: 0.9rem; }
+}
+
+/* ---------- Respect people who don't want motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
